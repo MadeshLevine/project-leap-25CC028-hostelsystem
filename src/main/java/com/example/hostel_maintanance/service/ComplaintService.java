@@ -5,6 +5,7 @@ import com.example.hostel_maintanance.repository.complaintRepository;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,17 +23,42 @@ public class ComplaintService {
     }
 
     public List<complaint> getAllComplaints() {
-        return repository.findAll();
+
+        List<complaint> complaints = repository.findAll();
+
+        for (complaint complaint : complaints) {
+            checkOverdue(complaint);
+        }
+
+        return complaints;
     }
 
     public complaint getComplaint(Long id) {
-        return repository.findById(id)
+
+        complaint complaint = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Complaint not found"));
+
+        checkOverdue(complaint);
+
+        return complaint;
+    }
+
+    private void checkOverdue(complaint complaint) {
+
+        if (complaint.getStatus().equals("OPEN")
+                && complaint.getCreatedAt().isBefore(LocalDateTime.now().minusDays(5))) {
+
+            complaint.setOverdue(true);
+            repository.save(complaint);
+        }
     }
 
     public complaint assignStaff(Long id, Long staffId) {
+
         complaint complaint = getComplaint(id);
+
         complaint.setStaffId(staffId);
+
         return repository.save(complaint);
     }
 
@@ -53,6 +79,7 @@ public class ComplaintService {
             complaint.setStatus("RESOLVED");
 
         } else {
+
             throw new RuntimeException("Invalid status change");
         }
 

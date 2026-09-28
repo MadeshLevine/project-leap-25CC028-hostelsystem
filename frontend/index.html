@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ComplaintBox - Hostel Maintenance</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>ComplaintBox</h1>
+    <p>Hostel Maintenance Complaint Tracker</p>
+</header>
+
+<div class="container">
+
+    <!-- Dashboard -->
+    <section class="dashboard">
+
+        <div class="card">
+            <h3>Total Complaints</h3>
+            <p id="totalComplaints">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Open</h3>
+            <p id="openComplaints">0</p>
+        </div>
+
+        <div class="card">
+            <h3>In Progress</h3>
+            <p id="progressComplaints">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Resolved</h3>
+            <p id="resolvedComplaints">0</p>
+        </div>
+
+    </section>
+
+
+    <!-- Create Complaint -->
+    <section class="form-section">
+
+        <h2>Raise a Complaint</h2>
+
+        <form id="complaintForm">
+
+            <label for="residentId">Resident ID</label>
+            <input
+                    type="number"
+                    id="residentId"
+                    placeholder="Example: 1"
+                    required
+            >
+            <label for="categoryId">Category ID</label>
+            <input
+                    type="number"
+                    id="categoryId"
+                    placeholder="Example: 1"
+                    required
+            >
+            <label for="roomNumber">Room Number</label>
+            <input
+                    type="text"
+                    id="roomNumber"
+                    placeholder="Example: A-204"
+                    required
+            >
+            <label for="description">Description</label>
+            <textarea
+                    id="description"
+                    placeholder="Describe the problem"
+                    required
+            ></textarea>
+
+            <button type="submit">
+                Submit Complaint
+            </button>
+
+        </form>
+
+        <p id="message"></p>
+
+    </section>
+
+
+    <!-- Complaints -->
+    <section class="complaints-section">
+
+        <div class="section-header">
+
+            <h2>Complaints</h2>
+
+            <button onclick="loadComplaints()">
+                Refresh
+            </button>
+
+        </div>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Room</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Resident</th>
+                    <th>Staff</th>
+                    <th>Status</th>
+                    <th>Overdue</th>
+                    <th>Actions</th>
+                </tr>
+
+                </thead>
+
+                <tbody id="complaintTableBody">
+
+                <tr>
+                    <td colspan="9">
+                        Loading complaints...
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
